@@ -10,7 +10,7 @@ def square():
     glVertex2f(200, 200)
     glVertex2f(100, 200)
     glEnd()
-
+    
 def iterate():
     glViewport(0, 0, 500, 500)
     glMatrixMode(GL_PROJECTION)

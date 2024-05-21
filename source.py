@@ -1,28 +1,37 @@
-import pygame as PG
 from OpenGL.GL import *
+from OpenGL.GLUT import *
+from OpenGL.GLU import *
 
-class App:
-    def __init__(self):
-        PG.init()
-        PG.display.set_mode((640, 480), PG.OPENGL | PG.DOUBLEBUF)
-        self.clock = PG.time.Clock()
-        glClearColor(0.1, 0.2, 0.2, 1)
-        self.mainloop()
-    
-    def mainloop(self):
-        running = True
-        while running:
-            for event in PG.event.get():
-                if event.type == PG.QUIT:
-                    running = False
-            glClear(GL_COLOR_BUFFER_BIT)
-            PG.display.flip()
-            self.clock.tick(60)
-        self.quit()
+w,h= 500,500
+def square():
+    glBegin(GL_QUADS)
+    glVertex2f(100, 100)
+    glVertex2f(200, 100)
+    glVertex2f(200, 200)
+    glVertex2f(100, 200)
+    glEnd()
 
-    def quit(self):
-        PG.quit()
-    
-if __name__ == '__main__':
-    myapp = App()
-    
+def iterate():
+    glViewport(0, 0, 500, 500)
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
+    glOrtho(0.0, 500, 0.0, 500, 0.0, 1.0)
+    glMatrixMode (GL_MODELVIEW)
+    glLoadIdentity()
+
+def showScreen():
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glLoadIdentity()
+    iterate()
+    glColor3f(1.0, 0.0, 3.0)
+    square()
+    glutSwapBuffers()
+
+glutInit()
+glutInitDisplayMode(GLUT_RGBA)
+glutInitWindowSize(500, 500)
+glutInitWindowPosition(0, 0)
+wind = glutCreateWindow(b"OpenGL Coding Practice")
+glutDisplayFunc(showScreen)
+glutIdleFunc(showScreen)
+glutMainLoop()

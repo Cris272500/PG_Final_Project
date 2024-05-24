@@ -1,0 +1,19 @@
+-------------> Comandos Python <-------------
+	---> Activar entorno virtual
+		.\env\Scripts\activate
+	---> Ejecutar archivo.py
+		python archivo.py
+	---> Desactivar entorno virtual
+		deactivate
+
+-------------> Comandos Git <-------------
+	---> Traer contenido / archivos / cambios que se hicieron en el repositorio
+		git pull origin main
+	---> Agregar archivos / cambios
+		git add .
+	---> Guardar cambios efectuados y comentario de lo que se hizo
+		git commit -m "ejemplo commit"
+	---> Subir el commit 
+		git push
+	---> Verificar estado del repositorio
+		git status

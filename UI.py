@@ -10,20 +10,40 @@ def init_gl(width, height):
     glEnable(GL_DEPTH_TEST)           # Activar la prueba de profundidad
     glDepthFunc(GL_LEQUAL)            # Tipo de prueba de profundidad
     glShadeModel(GL_SMOOTH)           # Sombreado suave
+    glEnable(GL_TEXTURE_2D)           # Habilitar texturas
+    glEnable(GL_BLEND)                # Habilitar blending para transparencia
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
     gluOrtho2D(-1, 1, -1, 1)          # Configuración para vista ortográfica 2D
     glMatrixMode(GL_MODELVIEW)
 
+
+# Función para cargar texturas
+def load_texture(image_path):
+    texture_surface = pygame.image.load(image_path)
+    texture_data = pygame.image.tostring(texture_surface, "RGBA", True)
+    width, height = texture_surface.get_size()
+    
+    texture_id = glGenTextures(1)
+    glBindTexture(GL_TEXTURE_2D, texture_id)
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture_data)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+    return texture_id
+
 # Clase para el botón
 class Button:
-    def __init__(self, x, y, width, height, color, hover_color, action=None):
+    def __init__(self, x, y, width, height, color, hover_color, texture_path, action=None):
         self.x = x
         self.y = y
         self.width = width
         self.height = height
         self.color = color
         self.hover_color = hover_color
+        self.texture_id = load_texture(texture_path)  # Cargar la textura
         self.action = action
 
     def draw(self, mx, my):
@@ -31,11 +51,13 @@ class Button:
             glColor3f(*self.hover_color)
         else:
             glColor3f(*self.color)
+
+        glBindTexture(GL_TEXTURE_2D, self.texture_id)
         glBegin(GL_QUADS)
-        glVertex2f(self.x, self.y)
-        glVertex2f(self.x + self.width, self.y)
-        glVertex2f(self.x + self.width, self.y + self.height)
-        glVertex2f(self.x, self.y + self.height)
+        glTexCoord2f(0.0, 0.0); glVertex2f(self.x, self.y)
+        glTexCoord2f(1.0, 0.0); glVertex2f(self.x + self.width, self.y)
+        glTexCoord2f(1.0, 1.0); glVertex2f(self.x + self.width, self.y + self.height)
+        glTexCoord2f(0.0, 1.0); glVertex2f(self.x, self.y + self.height)
         glEnd()
 
     def is_mouse_over(self, mx, my):
@@ -47,19 +69,21 @@ class Button:
 
 def main():
     pygame.init()
-    display = (800, 600)
+    display = (1000, 750)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
-    pygame.display.set_caption('Pygame OpenGL Multiple Buttons')
+    pygame.display.set_caption('UI PG')
 
     init_gl(*display)
     running = True
 
+    #Ruta en variable
+    wood = "Textures_UI\\Wood.png"
+
     buttons = [
-        Button(-0.8, 0.5, 0.25, 0.15, (0.0, 1.0, 0.0), (0.0, 0.8, 0.0), lambda: print("Hola")),
-        #Button(0.3, 0.5, 0.5, 0.3, (0.0, 0.0, 1.0), (0.0, 0.0, 0.8), lambda: print("Button 2 Clicked!")),
-        #Button(-0.8, -0.3, 0.5, 0.3, (1.0, 0.0, 0.0), (0.8, 0.0, 0.0), lambda: print("Button 3 Clicked!")),
-       # Button(0.3, -0.3, 0.5, 0.3, (1.0, 1.0, 0.0), (0.8, 0.8, 0.0), lambda: print("Button 4 Clicked!"))
+       Button(-0.8, 0.5, 0.25, 0.15, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), wood, lambda: print("Hola")),
     ]
+
+    clock = pygame.time.Clock()
 
     while running:
         mx, my = pygame.mouse.get_pos()
@@ -70,6 +94,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 for button in buttons:
                     button.check_click(mx, my)
@@ -81,7 +106,7 @@ def main():
             button.draw(mx, my)
 
         pygame.display.flip()
-        pygame.time.wait(10)
+        clock.tick(60)
 
     pygame.quit()
 

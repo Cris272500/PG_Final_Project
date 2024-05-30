@@ -1,4 +1,3 @@
 pygame==2.5.2
 -e git+https://github.com/mcfletch/pyopengl@4bec6e6465741b1015d682657802f59dc5937144#egg=PyOpenGL
 -e git+https://github.com/mcfletch/pyopengl@4bec6e6465741b1015d682657802f59dc5937144#egg=PyOpenGL_accelerate&subdirectory=accelerate
-PyWavefront==1.3.3

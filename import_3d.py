@@ -3,7 +3,7 @@ import OpenGL
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
-import pywavefront
+import pywavefront # type: ignore
 scene = pywavefront.Wavefront('bunny.obj', collect_faces=True)
 
 scene_box = (scene.vertices[0], scene.vertices[0])
@@ -33,6 +33,7 @@ def Model():
     glPopMatrix()
 
 def main():
+        
         pygame.init()
         display = (800, 600)
         pygame.display.set_mode(display, DOUBLEBUF | OPENGL)

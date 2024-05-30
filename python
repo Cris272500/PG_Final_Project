@@ -1,0 +1,13 @@
+pygame 2.5.2 (SDL 2.28.3, Python 3.12.3)
+Hello from the pygame community. https://www.pygame.org/contribute.html
+<Event(4352-AudioDeviceAdded {'which': 0, 'iscapture': 0})> {'which': 0, 'iscapture': 0}
+<Event(32779-WindowSizeChanged {'x': 1920, 'y': 1080, 'window': None})> {'x': 1920, 'y': 1080, 'window': None}
+<Event(32774-WindowShown {'window': None})> {'window': None}
+<Event(32768-ActiveEvent {'gain': 1, 'state': 2})> {'gain': 1, 'state': 2}
+<Event(32785-WindowFocusGained {'window': None})> {'window': None}
+<Event(770-TextEditing {'text': '', 'start': 0, 'length': 0, 'window': None})> {'text': '', 'start': 0, 'length': 0, 'window': None}
+<Event(32768-ActiveEvent {'gain': 1, 'state': 1})> {'gain': 1, 'state': 1}
+<Event(32783-WindowEnter {'window': None})> {'window': None}
+<Event(1024-MouseMotion {'pos': (400, 875), 'rel': (0, 0), 'buttons': (0, 0, 0), 'touch': False, 'window': None})> {'pos': (400, 875), 'rel': (0, 0), 'buttons': (0, 0, 0), 'touch': False, 'window': None}
+<Event(32770-VideoExpose {})> {}
+<Event(32776-WindowExposed {'window': None})> {'window': None}

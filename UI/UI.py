@@ -4,9 +4,11 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 
 from Options import Credits
+from button import Button  # Importa la clase Button
 
 #Variables booleanas Globales
 Cred = False
+Sett = False
 
 # Inicialización de OpenGL
 def init_gl(width, height):
@@ -23,67 +25,17 @@ def init_gl(width, height):
     gluOrtho2D(-1, 1, -1, 1)          # Configuración para vista ortográfica 2D
     glMatrixMode(GL_MODELVIEW)
 
-def ON_OFF():
+def ON_OFF_CREDITS():
     global Cred
     Cred = not Cred
 
-# Función para cargar texturas
-def load_texture(image_path):
-    texture_surface = pygame.image.load(image_path)
-    texture_data = pygame.image.tostring(texture_surface, "RGBA", True)
-    width, height = texture_surface.get_size()
-    
-    texture_id = glGenTextures(1)
-    glBindTexture(GL_TEXTURE_2D, texture_id)
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture_data)
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
-    return texture_id
+def ON_OFF_SETTINGS():
+    global Sett
+    Sett = not Sett
 
-# Clase para el botón
-class Button:
-    def __init__(self, x, y, width, height, color, hover_color, texture_path, action=None):
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-        self.color = color
-        self.hover_color = hover_color
-        self.texture_id = load_texture(texture_path)  # Cargar la textura
-        self.enabled = True  # Atributo para el estado del botón
-        self.action = action
-
-    def draw(self, mx, my):
-        if not self.enabled:
-            return  # No dibujar el botón si está desactivado
-
-        if self.is_mouse_over(mx, my):
-            glColor3f(*self.hover_color)
-        else:
-            glColor3f(*self.color)
-
-        glBindTexture(GL_TEXTURE_2D, self.texture_id)
-        glBegin(GL_QUADS)
-        glTexCoord2f(0.0, 0.0); glVertex2f(self.x, self.y)
-        glTexCoord2f(1.0, 0.0); glVertex2f(self.x + self.width, self.y)
-        glTexCoord2f(1.0, 1.0); glVertex2f(self.x + self.width, self.y + self.height)
-        glTexCoord2f(0.0, 1.0); glVertex2f(self.x, self.y + self.height)
-        glEnd()
-
-    def is_mouse_over(self, mx, my):
-        return self.x <= mx <= self.x + self.width and self.y <= my <= self.y + self.height
-
-    def check_click(self, mx, my):
-        if self.enabled and self.is_mouse_over(mx, my) and self.action:
-            self.action()
-
-    def enable(self):
-        self.enabled = True
-
-    def disable(self):
-        self.enabled = False
+def OFF_ALL():
+    global Sett, Cred
+    Sett, Cred = False, False
 
 def main():
     pygame.init()
@@ -100,15 +52,17 @@ def main():
     title = "Textures\\Title.png"
     Nombres = "Textures\\Credits.png"
     back = "Textures\\Return.png"
+    Settings = "Textures\\Settings.png"
 
     # Cargar la imagen en la parte superior central
     Titulo = Button(-0.7, 0.1, 1.4, 0.8, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), title)
     Nombres_Proyecto = Button(-0.7, 0.1, 1.4, 0.8, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), Nombres)
 
     # Inicializar botones
-    start_button = Button(-0.125, -0.9, 0.25, 0.15, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), Start, lambda: print("Hola"))
-    credits_button = Button(-0.450, -0.93, 0.30, 0.22, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), Creditos, ON_OFF)
-    back_button = Button(-0.700, -0.93, 0.30, 0.22, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), back, ON_OFF)
+    start_button = Button(-0.125, -0.9, 0.25, 0.17, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), Start, lambda: print("Hola"))
+    credits_button = Button(-0.450, -0.93, 0.30, 0.24, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), Creditos, ON_OFF_CREDITS)
+    back_button = Button(-0.700, -0.93, 0.25, 0.15, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), back, OFF_ALL)
+    settings_button = Button(0.200, -0.9, 0.25, 0.15, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), Settings, ON_OFF_SETTINGS)
 
     #Activar o desactivar botones
     back_button.disable()
@@ -120,6 +74,7 @@ def main():
        back_button,
        Titulo,
        Nombres_Proyecto,
+       settings_button,
     ]
 
     clock = pygame.time.Clock()
@@ -150,7 +105,14 @@ def main():
 
             start_button.disable()
             credits_button.disable()
+            settings_button.disable()
             Titulo.disable()
+        
+        elif Sett:
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+            glLoadIdentity()
+
+
 
         else:
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -161,8 +123,8 @@ def main():
 
             start_button.enable()
             credits_button.enable()
+            settings_button.enable()
             Titulo.enable()
-
 
         for button in buttons:
             button.draw(mx, my)

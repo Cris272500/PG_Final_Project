@@ -5,6 +5,9 @@ from OpenGL.GLU import *
 
 from Options import Credits
 
+#Variables booleanas Globales
+Cred = False
+
 # Inicialización de OpenGL
 def init_gl(width, height):
     glClearColor(0.0, 0.0, 0.0, 1.0)  # Fondo negro
@@ -20,6 +23,9 @@ def init_gl(width, height):
     gluOrtho2D(-1, 1, -1, 1)          # Configuración para vista ortográfica 2D
     glMatrixMode(GL_MODELVIEW)
 
+def ON_OFF():
+    global Cred
+    Cred = not Cred
 
 # Función para cargar texturas
 def load_texture(image_path):
@@ -46,9 +52,13 @@ class Button:
         self.color = color
         self.hover_color = hover_color
         self.texture_id = load_texture(texture_path)  # Cargar la textura
+        self.enabled = True  # Atributo para el estado del botón
         self.action = action
 
     def draw(self, mx, my):
+        if not self.enabled:
+            return  # No dibujar el botón si está desactivado
+
         if self.is_mouse_over(mx, my):
             glColor3f(*self.hover_color)
         else:
@@ -66,8 +76,14 @@ class Button:
         return self.x <= mx <= self.x + self.width and self.y <= my <= self.y + self.height
 
     def check_click(self, mx, my):
-        if self.is_mouse_over(mx, my) and self.action:
+        if self.enabled and self.is_mouse_over(mx, my) and self.action:
             self.action()
+
+    def enable(self):
+        self.enabled = True
+
+    def disable(self):
+        self.enabled = False
 
 def main():
     pygame.init()
@@ -80,14 +96,30 @@ def main():
 
     #Ruta en variable
     Start = "Textures\\Start.png"
+    Creditos = "Textures\\Credits_button.png"
     title = "Textures\\Title.png"
+    Nombres = "Textures\\Credits.png"
+    back = "Textures\\Return.png"
 
     # Cargar la imagen en la parte superior central
     Titulo = Button(-0.7, 0.1, 1.4, 0.8, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), title)
+    Nombres_Proyecto = Button(-0.7, 0.1, 1.4, 0.8, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), Nombres)
 
+    # Inicializar botones
+    start_button = Button(-0.125, -0.9, 0.25, 0.15, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), Start, lambda: print("Hola"))
+    credits_button = Button(-0.450, -0.93, 0.30, 0.22, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), Creditos, ON_OFF)
+    back_button = Button(-0.700, -0.93, 0.30, 0.22, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), back, ON_OFF)
+
+    #Activar o desactivar botones
+    back_button.disable()
+    Nombres_Proyecto.disable()
 
     buttons = [
-       Button(-0.125, -0.9, 0.25, 0.15, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), Start, lambda: print("Hola")),
+       start_button,
+       credits_button,
+       back_button,
+       Titulo,
+       Nombres_Proyecto,
     ]
 
     clock = pygame.time.Clock()
@@ -109,11 +141,31 @@ def main():
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glLoadIdentity()
 
+        if Cred:
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+            glLoadIdentity()
+
+            back_button.enable()
+            Nombres_Proyecto.enable()
+
+            start_button.disable()
+            credits_button.disable()
+            Titulo.disable()
+
+        else:
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+            glLoadIdentity()
+
+            back_button.disable()
+            Nombres_Proyecto.disable()
+
+            start_button.enable()
+            credits_button.enable()
+            Titulo.enable()
+
+
         for button in buttons:
             button.draw(mx, my)
-
-        # Dibujar la imagen en la parte superior central
-        Titulo.draw(mx, my)
 
         pygame.display.flip()
         clock.tick(60)

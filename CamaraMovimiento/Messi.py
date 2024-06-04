@@ -6,7 +6,7 @@ from OpenGL.GLU import *
 import pywavefront  # type: ignore
 
 # Cargar el modelo OBJ
-scene = pywavefront.Wavefront('bunny.obj', collect_faces=True)
+scene = pywavefront.Wavefront('PRUEBA.obj', collect_faces=True)
 
 # Calcular el tamaño del modelo y establecer la escala y la traslación
 scene_box = (scene.vertices[0], scene.vertices[0])

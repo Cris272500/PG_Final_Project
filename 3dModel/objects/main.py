@@ -130,16 +130,19 @@ def make_corner(corner_description: str,
     """
         Composes a flattened description of a vertex.
     """
-
+    corner_description = corner_description.strip()
     v_vt_vn = corner_description.split("/")
-    
-    for element in v[int(v_vt_vn[0]) - 1]:
-        vertices.append(element)
-    for element in vt[int(v_vt_vn[1]) - 1]:
-        vertices.append(element)
-    for element in vn[int(v_vt_vn[2]) - 1]:
-        vertices.append(element)
 
+    # Verificar que tenemos suficiente información antes de acceder a los índices
+    if len(v_vt_vn) > 0 and v_vt_vn[0]:
+        for element in v[int(v_vt_vn[0]) - 1]:
+            vertices.append(element)
+    if len(v_vt_vn) > 1 and v_vt_vn[1]:
+        for element in vt[int(v_vt_vn[1]) - 1]:
+            vertices.append(element)
+    if len(v_vt_vn) > 2 and v_vt_vn[2]:
+        for element in vn[int(v_vt_vn[2]) - 1]:
+            vertices.append(element)
 class Entity:
     """
         A basic object in the world, with a position and rotation.
@@ -252,7 +255,7 @@ class App:
             position = [0,0,-3],
             eulers = [0,0,0]
         )
-        self.cube_mesh = Mesh("models/cube.obj")
+        self.cube_mesh = Mesh("models/PRUEBA.obj")
         self.wood_texture = Material("gfx/wood.jpeg")
         self.shader = create_shader(
             vertex_filepath = "shaders/vertex.txt", 

@@ -1,0 +1,294 @@
+newmtl Uppertribune07001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 1
+
+Ns 0
+
+map_Ka Uppertribune07001_diff.png
+map_Kd Uppertribune07001_diff.png
+map_d Uppertribune07001_diff.png
+
+newmtl Uppertribune04001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 1
+
+Ns 0
+
+map_Ka Uppertribune04001_diff.png
+map_Kd Uppertribune04001_diff.png
+map_d Uppertribune04001_diff.png
+
+newmtl Uppertribune00001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 1
+
+Ns 0
+
+map_Ka Uppertribune00001_diff.png
+map_Kd Uppertribune00001_diff.png
+map_d Uppertribune00001_diff.png
+
+newmtl Upperside00001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 0.952941
+
+Ns 0
+
+map_Ka Upperside00001_diff.png
+map_Kd Upperside00001_diff.png
+map_d Upperside00001_diff.png
+
+newmtl Upperside05001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 0.952941
+
+Ns 0
+
+map_Ka Upperside05001_diff.png
+map_Kd Upperside05001_diff.png
+map_d Upperside05001_diff.png
+
+newmtl Upperside04001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 1
+
+Ns 0
+
+map_Ka Upperside04001_diff.png
+map_Kd Upperside04001_diff.png
+map_d Upperside04001_diff.png
+
+newmtl Upperside02001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 1
+
+Ns 0
+
+map_Ka Upperside02001_diff.png
+map_Kd Upperside02001_diff.png
+map_d Upperside02001_diff.png
+
+newmtl Righttribune10001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 1
+
+Ns 0
+
+map_Ka Righttribune10001_diff.png
+map_Kd Righttribune10001_diff.png
+map_d Righttribune10001_diff.png
+
+newmtl Downside08001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 1
+
+Ns 0
+
+map_Ka Downside08001_diff.png
+map_Kd Downside08001_diff.png
+map_d Downside08001_diff.png
+
+newmtl Field301001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 1
+
+Ns 0
+
+map_Ka Field301001_diff.png
+map_Kd Field301001_diff.png
+map_d Field301001_diff.png
+
+newmtl Righttribune08001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 1
+
+Ns 0
+
+map_Ka Righttribune08001_diff.png
+map_Kd Righttribune08001_diff.png
+map_d Righttribune08001_diff.png
+
+newmtl Righttribune03001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 1
+
+Ns 0
+
+map_Ka Righttribune03001_diff.png
+map_Kd Righttribune03001_diff.png
+map_d Righttribune03001_diff.png
+
+newmtl Righttribune00001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 1
+
+Ns 0
+
+map_Ka Righttribune00001_diff.png
+map_Kd Righttribune00001_diff.png
+map_d Righttribune00001_diff.png
+
+newmtl Rightside11001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 0.952941
+
+Ns 0
+
+map_Ka Upperside04001_diff.png
+map_Kd Upperside04001_diff.png
+map_d Upperside04001_diff.png
+
+newmtl Rightside09001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 0.952941
+
+Ns 0
+
+map_Ka Rightside09001_diff.png
+map_Kd Rightside09001_diff.png
+map_d Rightside09001_diff.png
+
+newmtl Rightside03001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 1
+
+Ns 0
+
+map_Ka Rightside03001_diff.png
+map_Kd Rightside03001_diff.png
+map_d Rightside03001_diff.png
+
+newmtl Lefttribune11001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 0.952941
+
+Ns 0
+
+map_Ka Rightside03001_diff.png
+map_Kd Rightside03001_diff.png
+map_d Rightside03001_diff.png
+
+newmtl Lefttribune05001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 1
+
+Ns 0
+
+map_Ka Lefttribune05001_diff.png
+map_Kd Lefttribune05001_diff.png
+map_d Lefttribune05001_diff.png
+
+newmtl Downtribune17001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 1
+
+Ns 0
+
+map_Ka Downtribune17001_diff.png
+map_Kd Downtribune17001_diff.png
+map_d Downtribune17001_diff.png
+
+newmtl Downtribune15001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 1
+
+Ns 0
+
+map_Ka Downtribune15001_diff.png
+map_Kd Downtribune15001_diff.png
+map_d Downtribune15001_diff.png
+
+newmtl Downtribune04001Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.0627451 0.0627451 0.0627451 
+
+d 0.901961
+
+Ns 0
+
+map_Ka Downtribune04001_diff.png
+map_Kd Downtribune04001_diff.png
+map_d Downtribune04001_diff.png
+

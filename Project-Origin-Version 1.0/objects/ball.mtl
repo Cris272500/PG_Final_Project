@@ -1,0 +1,12 @@
+# Blender 4.1.1 MTL File: 'None'
+# www.blender.org
+
+newmtl Brazuca
+Ns 96.078453
+Ka 1.000000 1.000000 1.000000
+Ks 0.214876 0.214876 0.214876
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:/Users/Messi/Desktop/modelos/21802_open3dmodel/21802_open3dmodel/open3dmodel.com/Model_C0902039/brazuca.jpg

@@ -1,0 +1,57 @@
+{
+  "created_at": "2024-06-27T17:46:44.125496",
+  "version": "0.1",
+  "mtllibs": [
+    "personaobj.mtl"
+  ],
+  "vertex_buffers": [
+    {
+      "material": "leonmesh_01",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 0,
+      "byte_length": 49056
+    },
+    {
+      "material": "leonmesh_02",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 49056,
+      "byte_length": 145920
+    },
+    {
+      "material": "leonmesh_03",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 194976,
+      "byte_length": 54528
+    },
+    {
+      "material": "leonmesh_04",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 249504,
+      "byte_length": 91680
+    },
+    {
+      "material": "leonmesh_05",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 341184,
+      "byte_length": 43392
+    },
+    {
+      "material": "leonmesh_06",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 384576,
+      "byte_length": 18720
+    },
+    {
+      "material": "leonmesh_07",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 403296,
+      "byte_length": 65472
+    },
+    {
+      "material": "leonmesh_08",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 468768,
+      "byte_length": 4128
+    }
+  ]
+}

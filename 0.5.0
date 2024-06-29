@@ -1,0 +1,15 @@
+Collecting pyrender
+  Using cached pyrender-0.1.45-py3-none-any.whl.metadata (1.5 kB)
+Requirement already satisfied: freetype-py in c:\users\messi\desktop\pg_final_project\env\lib\site-packages (from pyrender) (2.4.0)
+Requirement already satisfied: imageio in c:\users\messi\desktop\pg_final_project\env\lib\site-packages (from pyrender) (2.34.1)
+Requirement already satisfied: networkx in c:\users\messi\desktop\pg_final_project\env\lib\site-packages (from pyrender) (3.3)
+Requirement already satisfied: numpy in c:\users\messi\desktop\pg_final_project\env\lib\site-packages (from pyrender) (1.26.4)
+Requirement already satisfied: Pillow in c:\users\messi\desktop\pg_final_project\env\lib\site-packages (from pyrender) (10.3.0)
+Requirement already satisfied: pyglet>=1.4.10 in c:\users\messi\desktop\pg_final_project\env\lib\site-packages (from pyrender) (2.0.15)
+Requirement already satisfied: PyOpenGL==3.1.0 in c:\users\messi\desktop\pg_final_project\env\lib\site-packages (from pyrender) (3.1.0)
+Requirement already satisfied: scipy in c:\users\messi\desktop\pg_final_project\env\lib\site-packages (from pyrender) (1.13.1)
+Requirement already satisfied: six in c:\users\messi\desktop\pg_final_project\env\lib\site-packages (from pyrender) (1.16.0)
+Requirement already satisfied: trimesh in c:\users\messi\desktop\pg_final_project\env\lib\site-packages (from pyrender) (4.4.1)
+Using cached pyrender-0.1.45-py3-none-any.whl (1.2 MB)
+Installing collected packages: pyrender
+Successfully installed pyrender-0.1.45

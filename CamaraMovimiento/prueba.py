@@ -1,181 +1,195 @@
-import pygame
-import moderngl
-import pywavefront
+import pygame as pg
+from OpenGL.GL import *
+from OpenGL.GL.shaders import compileProgram, compileShader
 import numpy as np
-import math
 
-# Cargar el modelo OBJ
-scene = pywavefront.Wavefront('bunny.obj', collect_faces=True, create_materials=True)
+def create_shader(vertex_filepath: str, fragment_filepath: str) -> int:
+    """
+    Compile and link shader modules to make a shader program.
 
-# Calcular el tamaño del modelo y establecer la escala y la traslación
-scene_box = (scene.vertices[0], scene.vertices[0])
-for vertex in scene.vertices:
-    min_v = [min(scene_box[0][i], vertex[i]) for i in range(3)]
-    max_v = [max(scene_box[1][i], vertex[i]) for i in range(3)]
-    scene_box = (min_v, max_v)
-
-scene_size = [scene_box[1][i] - scene_box[0][i] for i in range(3)]
-max_scene_size = max(scene_size)
-scaled_size = 5
-scene_scale = [scaled_size / max_scene_size for _ in range(3)]
-scene_trans = [-(scene_box[1][i] + scene_box[0][i]) / 2 for i in range(3)]
-
-# Variables de control
-mouse_down = False
-last_pos = None
-rotation = [0, 0]
-z_pos = -10
-zoom_speed = 2.0
-
-# Función principal
-def main():
-    pygame.init()
-    display = (800, 600)
-    pygame.display.set_mode(display, pygame.OPENGL | pygame.DOUBLEBUF)
-    ctx = moderngl.create_context()
-
-    # Vertex Shader
-    vertex_shader = """
-    #version 330
-    in vec3 in_position;
-    in vec3 in_color;
-    out vec3 color;
-    uniform mat4 model;
-    uniform mat4 view;
-    uniform mat4 projection;
-    void main() {
-        gl_Position = projection * view * model * vec4(in_position, 1.0);
-        color = in_color;
-    }
+    Parameters:
+        vertex_filepath: path to the text file storing the vertex source code
+        fragment_filepath: path to the text file storing the fragment source code
+    
+    Returns:
+        A handle to the created shader program
     """
 
-    # Fragment Shader
-    fragment_shader = """
-    #version 330
-    in vec3 color;
-    out vec4 fragColor;
-    void main() {
-        fragColor = vec4(color, 1.0);
-    }
+    with open(vertex_filepath, 'r') as f:
+        vertex_src = f.read()
+
+    with open(fragment_filepath, 'r') as f:
+        fragment_src = f.read()
+    
+    shader = compileProgram(compileShader(vertex_src, GL_VERTEX_SHADER),
+                            compileShader(fragment_src, GL_FRAGMENT_SHADER))
+    
+    return shader
+
+class Mesh:
+    """
+    A mesh that can represent an obj model.
     """
 
-    # Crear programa shader
-    shader = ctx.program(vertex_shader=vertex_shader, fragment_shader=fragment_shader)
+    def __init__(self, filename: str):
+        """
+        Initialize the mesh.
+        """
 
-    # Crear VAO y VBO
-    vbo = ctx.buffer(np.array(scene.vertices, dtype='f4'))
-    vao = ctx.simple_vertex_array(shader, vbo, 'in_position', 'in_color')
+        vertices, colors = self.load_mesh(filename)
+        self.vertex_count = len(vertices)
 
-    # Crear la matriz de proyección
-    fov = 45.0  # Ángulo de visión en grados
-    near = 1.0
-    far = 500.0
-    # Variables de control
-    mouse_down = False
-    last_pos = None
-    rotation = [0, 0]
-    z_pos = -10
-    zoom_speed = 2.0
-    aspect = display[0] / display[1]
-    projection = np.array(perspective(fov, aspect, near, far), dtype='f4')
+        self.vao = glGenVertexArrays(1)
+        glBindVertexArray(self.vao)
 
-    # Crear la matriz de vista
-    view = np.array(np.eye(4), dtype='f4')
-    view = view.dot(np.array([
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, -1, z_pos],
-        [0, 0, 0, 1]
-    ], dtype='f4'))
+        # Vertices
+        self.vbo = glGenBuffers(1)
+        glBindBuffer(GL_ARRAY_BUFFER, self.vbo)
+        glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW)
+        glEnableVertexAttribArray(0)
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, None)
 
-    # Crear la matriz de modelo
-    model = np.array(np.eye(4), dtype='f4')
-    model = model.dot(np.array([
-        [scene_scale[0], 0, 0, scene_trans[0]],
-        [0, scene_scale[1], 0, scene_trans[1]],
-        [0, 0, scene_scale[2], scene_trans[2]],
-        [0, 0, 0, 1]
-    ], dtype='f4'))
+        # Colors
+        self.cbo = glGenBuffers(1)
+        glBindBuffer(GL_ARRAY_BUFFER, self.cbo)
+        glBufferData(GL_ARRAY_BUFFER, colors, GL_STATIC_DRAW)
+        glEnableVertexAttribArray(1)
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, None)
 
-    # Bucle principal
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    model = model.dot(np.array([
-                        [1, 0, 0, -0.5],
-                        [0, 1, 0, 0],
-                        [0, 0, 1, 0],
-                        [0, 0, 0, 1]
-                    ], dtype='f4'))
-                if event.key == pygame.K_RIGHT:
-                    model = model.dot(np.array([
-                        [1, 0, 0, 0.5],
-                        [0, 1, 0, 0],
-                        [0, 0, 1, 0],
-                        [0, 0, 0, 1]
-                    ], dtype='f4'))
-                if event.key == pygame.K_UP:
-                    z_pos += zoom_speed
-                    view = view.dot(np.array([
-                        [1, 0, 0, 0],
-                        [0, 1, 0, 0],
-                        [0, 0, 1, zoom_speed],
-                        [0, 0, 0, 1]
-                    ], dtype='f4'))
-                if event.key == pygame.K_DOWN:
-                    z_pos -= zoom_speed
-                    view = view.dot(np.array([
-                        [1, 0, 0, 0],
-                        [0, 1, 0, 0],
-                        [0, 0, 1, -zoom_speed],
-                        [0, 0, 0, 1]
-                    ], dtype='f4'))
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:  # Botón izquierdo del mouse
-                    mouse_down = True
-                    last_pos = pygame.mouse.get_pos()
-            if event.type == pygame.MOUSEBUTTONUP:
-                if event.button == 1:  # Botón izquierdo del mouse
-                    mouse_down = False
-            if event.type == pygame.MOUSEMOTION:
-                if mouse_down:
-                    current_pos = pygame.mouse.get_pos()
-                    dx = current_pos[0] - last_pos[0]
-                    dy = current_pos[1] - last_pos[1]
-                    rotation[0] += dy
-                    rotation[1] += dx
-                    last_pos = current_pos
-                    model = model.dot(np.array([
-                        [1, 0, 0, 0],
-                        [0, math.cos(math.radians(rotation[0])), -math.sin(math.radians(rotation[0])), 0],
-                        [0, math.sin(math.radians(rotation[0])), math.cos(math.radians(rotation[0])), 0],
-                        [0, 0, 0, 1]
-                    ], dtype='f4')).dot(np.array([
-                        [math.cos(math.radians(rotation[1])), 0, math.sin(math.radians(rotation[1])), 0],
-                        [0, 1, 0, 0],
-                        [-math.sin(math.radians(rotation[1])), 0, math.cos(math.radians(rotation[1])), 0],
-                        [0, 0, 0, 1]
-                    ], dtype='f4'))
+    def load_mesh(self, filename: str) -> tuple:
+        """
+        Load a mesh from an obj file.
 
-        ctx.clear()
-        shader['model'].write(model)
-        shader['view'].write(view)
-        shader['projection'].write(projection)
-        vao.render(moderngl.TRIANGLES)
-        pygame.display.flip()
+        Parameters:
+            filename: the filename.
+        
+        Returns:
+            The loaded data, in a flattened format.
+        """
 
-def perspective(fov, aspect, near, far):
-    """Calcular la matriz de proyección perspectiva."""
-    f = 1.0 / math.tan(fov * math.pi / 360.0)
-    return [
-        f / aspect, 0, 0, 0,
-        0, f, 0, 0,
-        0, 0, (near + far) / (near - far), -1,
-        0, 0, 2 * near * far / (near - far), 0
-    ]
+        vertices = []
+        colors = []
 
-main()
+        with open(filename, "r") as file:
+            for line in file:
+                if line.startswith('v '):
+                    vertex = list(map(float, line.strip().split()[1:]))
+                    vertices.extend(vertex)
+                elif line.startswith('vc '):
+                    color = list(map(float, line.strip().split()[1:]))
+                    colors.extend(color)
+
+        return np.array(vertices, dtype=np.float32), np.array(colors, dtype=np.float32)
+
+    def arm_for_drawing(self) -> None:
+        """
+        Arm the triangle for drawing.
+        """
+        glBindVertexArray(self.vao)
+    
+    def draw(self) -> None:
+        """
+        Draw the triangle.
+        """
+        glDrawArrays(GL_TRIANGLES, 0, self.vertex_count)
+
+    def destroy(self) -> None:
+        """
+        Free any allocated memory.
+        """
+        glDeleteVertexArrays(1, (self.vao,))
+        glDeleteBuffers(1, (self.vbo,))
+        glDeleteBuffers(1, (self.cbo,))
+
+class App:
+    """
+    For now, the app will be handling everything.
+    Later on we'll break it into subcomponents.
+    """
+
+    def __init__(self):
+
+        self._set_up_pygame()
+        self._set_up_opengl()
+        self._create_assets()
+        self._set_onetime_uniforms()
+
+    def _set_up_pygame(self) -> None:
+        """
+        Initialize and configure pygame.
+        """
+
+        pg.init()
+        pg.display.gl_set_attribute(pg.GL_CONTEXT_MAJOR_VERSION, 3)
+        pg.display.gl_set_attribute(pg.GL_CONTEXT_MINOR_VERSION, 3)
+        pg.display.gl_set_attribute(pg.GL_CONTEXT_PROFILE_MASK, pg.GL_CONTEXT_PROFILE_CORE)
+        pg.display.set_mode((800, 600), pg.OPENGL|pg.DOUBLEBUF)
+
+    def _set_up_opengl(self) -> None:
+        """
+        Configure any desired OpenGL options
+        """
+
+        glClearColor(0.1, 0.2, 0.2, 1)
+        glEnable(GL_DEPTH_TEST)
+
+    def _create_assets(self) -> None:
+        """
+        Create all of the assets needed for drawing.
+        """
+
+        self.cube_mesh = Mesh("models/projectPG.obj")
+        self.shader = create_shader("shaders/vertex.txt", "shaders/fragment.txt")
+        
+    def _set_onetime_uniforms(self) -> None:
+        """
+        Some shader data only needs to be set once.
+        """
+
+        glUseProgram(self.shader)
+
+        projection_transform = np.array([
+            [1.81066096, 0.0, 0.0, 0.0],
+            [0.0, 2.41421356, 0.0, 0.0],
+            [0.0, 0.0, -1.002002, -0.2002002],
+            [0.0, 0.0, -1.0, 0.0]
+        ], dtype=np.float32)
+
+        glUniformMatrix4fv(
+            glGetUniformLocation(self.shader, "projection"),
+            1, GL_FALSE, projection_transform
+        )
+
+    def run(self) -> None:
+        """ Run the app """
+
+        running = True
+        while running:
+            # Check events
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    running = False
+            
+            # Refresh screen
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+            glUseProgram(self.shader)
+
+            # Arm mesh for drawing
+            self.cube_mesh.arm_for_drawing()
+
+            # Draw mesh
+            self.cube_mesh.draw()
+
+            pg.display.flip()
+
+    def quit(self) -> None:
+        """ Cleanup the app, run exit code """
+
+        self.cube_mesh.destroy()
+        glDeleteProgram(self.shader)
+        pg.quit()
+
+if __name__ == "__main__":
+    my_app = App()
+    my_app.run()
+    my_app.quit()

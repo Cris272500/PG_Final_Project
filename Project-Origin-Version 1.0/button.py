@@ -25,13 +25,9 @@ class Button:
         self.height = height
         self.color = color
         self.hover_color = hover_color
-        self.texture_id = None
-        self.texture_path = texture_path
+        self.texture_id = load_texture(texture_path)  # Cargar la textura
         self.enabled = True  # Atributo para el estado del botón
         self.action = action
-
-    def load(self):
-        self.texture_id = load_texture(self.texture_path)  # Cargar la textura
 
     def draw(self, mx, my):
         if not self.enabled:

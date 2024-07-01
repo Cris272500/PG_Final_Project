@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
+import subprocess
 
 from button import Button  # Importa la clase Button
 
@@ -36,6 +37,10 @@ def OFF_ALL():
     global Sett, Cred
     Sett, Cred = False, False
 
+def start_game():
+    pygame.quit()
+    subprocess.run(['python', 'main.py'])
+
 def main():
     pygame.init()
     display = (1000, 750)
@@ -53,17 +58,15 @@ def main():
     back = "Textures\\Return.png"
     Settings = "Textures\\Settings.png"
 
-    # Inicializar botones
-    start_button = Button(-0.125, -0.9, 0.25, 0.17, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), Start, lambda: print("Hola"))
-    credits_button = Button(-0.450, -0.93, 0.30, 0.24, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), Creditos, ON_OFF_CREDITS)
-    back_button = Button(-0.700, -0.93, 0.25, 0.15, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), back, OFF_ALL)
-    settings_button = Button(0.200, -0.9, 0.25, 0.15, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), Settings, ON_OFF_SETTINGS)
+    # Cargar la imagen en la parte superior central
     Titulo = Button(-0.7, 0.1, 1.4, 0.8, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), title)
     Nombres_Proyecto = Button(-0.7, 0.1, 1.4, 0.8, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), Nombres)
 
-    # Cargar texturas
-    for button in [start_button, credits_button, back_button, settings_button, Titulo, Nombres_Proyecto]:
-        button.load()
+    # Inicializar botones
+    start_button = Button(-0.125, -0.9, 0.25, 0.17, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), Start, start_game)
+    credits_button = Button(-0.450, -0.93, 0.30, 0.24, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), Creditos, ON_OFF_CREDITS)
+    back_button = Button(-0.700, -0.93, 0.25, 0.15, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), back, OFF_ALL)
+    settings_button = Button(0.200, -0.9, 0.25, 0.15, (1.0, 1.0, 1.0), (0.8, 0.8, 0.8), Settings, ON_OFF_SETTINGS)
 
     # Activar o desactivar botones
     back_button.disable()
@@ -83,8 +86,8 @@ def main():
     while running:
         mx, my = pygame.mouse.get_pos()
         # Convertir coordenadas del ratón de Pygame a coordenadas OpenGL
-        mx = (mx / display[0]) * 2 - 1  # De 0..1000 a -1..1
-        my = 1 - (my / display[1]) * 2  # De 0..750 a 1..-1
+        mx = (mx / display[0]) * 2 - 1  # De 0..800 a -1..1
+        my = 1 - (my / display[1]) * 2  # De 0..600 a 1..-1
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -94,7 +97,13 @@ def main():
                 for button in buttons:
                     button.check_click(mx, my)
 
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        glLoadIdentity()
+
         if Cred:
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+            glLoadIdentity()
+
             back_button.enable()
             Nombres_Proyecto.enable()
 
@@ -104,14 +113,13 @@ def main():
             Titulo.disable()
 
         elif Sett:
-            back_button.enable()
-
-            start_button.disable()
-            credits_button.disable()
-            settings_button.disable()
-            Titulo.disable()
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+            glLoadIdentity()
 
         else:
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+            glLoadIdentity()
+
             back_button.disable()
             Nombres_Proyecto.disable()
 
@@ -119,9 +127,6 @@ def main():
             credits_button.enable()
             settings_button.enable()
             Titulo.enable()
-
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        glLoadIdentity()
 
         for button in buttons:
             button.draw(mx, my)

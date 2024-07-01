@@ -70,7 +70,7 @@ Anteriormente, se explico los distintos módulos que usamos en este proyecto, pa
 	`pip install -r requirements.txt`
 ---
 4. Ejecución del proyecto
-	Cuando hallamos completado los anteriores pasos, ejecutamos `cd Project-Origin-Version 1.0` y dentro de esta carpeta debería de aparecer una estructura como ésta
+	Cuando hayamos completado los anteriores pasos, ejecutamos `cd Project-Origin-Version 1.0` y dentro de esta carpeta debería de aparecer una estructura como ésta
 	![image](https://github.com/Cris272500/PG_Final_Project/assets/113935131/b1e65d15-9e6a-4e4e-a211-bf9d1429c4cb)
 	y ejecutamos `python UI.py` de  ésta manera estaríamos ejecutando el proyecto
 

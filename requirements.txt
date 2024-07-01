@@ -37,7 +37,7 @@ PyGLM==2.7.1
 pygltflib==1.16.2
 Pygments==2.18.0
 PyOpenGL==3.1.7
-PyOpenGL_accelerate==3.1.7
+PyOpenGL-accelerate==3.1.7
 pyparsing==3.1.2
 pyrr==0.10.3
 python-dateutil==2.9.0.post0

@@ -1,19 +1,30 @@
 # PG_FINAL_PROJECT
 
-<div style="text-align: center;"> <img src="https://github.com/Cris272500/cs50w-project2/assets/113935131/b5749304-de85-40ad-87b1-905ed06c9ba3)" alt="Logo UNI" /> </div>
+<div style="text-align: center;">
+
+![image](https://github.com/Cris272500/PG_Final_Project/assets/113935131/91e15ea8-df38-4e7f-b1e1-738755ea70bf)
+
+
+</div>
 
 ## PROYECTO FINAL DE PROGRAMACIÓN GRÁFICA
 
 <h3 style="text-decoration: underline;">Integrantes</h1>
-- Espinoza Ruíz Norman Alfonso 2022-0480U
-- Ruiz Torres Josué Israel 2022-0357U
-- Quintana Cerna Cristopher David 2022-0301U
-- Duarte Lacayo Josué Gabriel 2022-0409U
+
+1. Espinoza Ruíz Norman Alfonso 2022-0480U
+2. Ruiz Torres Josué Israel 2022-0357U
+3. Quintana Cerna Cristopher David 2022-0301U
+4. Duarte Lacayo Josué Gabriel 2022-0409U
+   
 <h3 style="text-decoration: underline;">Grupo</h3>
+
 3T2-CO
+
 <h3 style="text-decoration: underline;">Docente</h3>
+
 Ing. Danny Chávez
 ___
+
 <div style="text-align: center;"> <h2>Resumen del proyecto</h2> </div>
 Nuestro equipo ha desarrollado un entorno virtual 3D que permite a los usuarios sumergirse en un campo de fútbol, específicamente en el estadio del FC Barcelona, ubicado en España, Europa. Con este proyecto, buscamos superar las barreras de distancia y económicas, permitiendo que cualquier aficionado de este equipo pueda experimentar de manera inmersiva el ambiente del estadio del FC Barcelona.
 
@@ -36,11 +47,17 @@ Para el desarrollo de este proyecto, hemos empleado una variedad de tecnologías
 
 <div style="text-align: center;"> <h2>Instalaciones</h2> </div>
 Anteriormente, se explico los distintos módulos que usamos en este proyecto, para poder hacer uso de estos, realizaremos las siguientes configuraciones
+
 1. Tener instalado Python
 	Para poder verificar que tenemos instalado correctamente instalado python, abrimos la CMD y ejecutamos el siguiente comando
 	**`python --version`**
 	en la terminal, debería de aparecer que versión de Python tienes instalada, sino la tienes instalada, no se podrá ejecutar el proyecto, para mayor información sobre su instalación puedes seguir el siguiente tutorial que explica cómo instalarlo
-	<div align="center"> <iframe width="560" height="315" src="https://youtu.be/yivyNCtVVDk?si=3PrPei8bh1wLwRFT" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> </div>
+	<div align="center">
+        <a href="https://youtu.be/yivyNCtVVDk?si=3PrPei8bh1wLwRFT">
+            <img src="https://img.youtube.com/vi/yivyNCtVVDk/0.jpg" alt="Video de YouTube" style="width:560px;height:315px;">
+        </a>
+    </div>
+
 ---
 2. Crear un entorno virtual
 	Para hacer uso de los módulos usados en este proyecto, es necesario crear un entorno virtual para que de ésta manera se puedan instalar correctamente con sus respectivas versiones, para ello usamos

@@ -45,7 +45,8 @@ Para el desarrollo de este proyecto, hemos empleado una variedad de tecnologías
 
 <div style="text-align: center;"> <h2>Instalaciones</h2> </div>
 
-Anteriormente, se explico los distintos módulos que usamos en este proyecto, para poder hacer uso de estos, realizaremos las siguientes configuraciones
+Anteriormente, se explico los distintos módulos que usamos en este proyecto, para poder hacer uso de estos, realizaremos las siguientes configuraciones, antes de realizar las instalaciones, tendremos que clonar el repositorio, usando:
+`git clone https://github.com/Cris272500/PG_Final_Project.git`, una ve hecho esto, procederemos con las inslacaiones.
 
 1. Tener instalado Python
 	Para poder verificar que tenemos instalado correctamente instalado python, abrimos la CMD y ejecutamos el siguiente comando
@@ -73,6 +74,14 @@ Anteriormente, se explico los distintos módulos que usamos en este proyecto, pa
 	Cuando hayamos completado los anteriores pasos, ejecutamos `cd Project-Origin-Version 1.0` y dentro de esta carpeta debería de aparecer una estructura como ésta
 	![image](https://github.com/Cris272500/PG_Final_Project/assets/113935131/b1e65d15-9e6a-4e4e-a211-bf9d1429c4cb)
 	y ejecutamos `python UI.py` de  ésta manera estaríamos ejecutando el proyecto
+
+En el siguiente link tendremos el resultado final de nuestro proyecto
+
+<div align="center">
+        <a href="https://www.youtube.com/watch?v=X1Hovkq0Bbg">
+            <img src="https://www.youtube.com/watch?v=X1Hovkq0Bbg" alt="Video de YouTube" style="width:560px;height:315px;">
+        </a>
+</div>
 
 ***
 ***
@@ -118,7 +127,8 @@ For the development of this project, we have used a variety of technologies, inc
 
 <div style="text-align: center;"> <h2>Installations</h2> </div>
 
-Previously, we explained the different modules we used in this project. To use these modules, we will perform the following configurations:
+Previously, we explained the different modules we used in this project. To use these modules, we will perform the following configurations, before performing the installations, we need to clone the repository using:
+`git clone https://github.com/Cris272500/PG_Final_Project.git` once this is done, we will proceed with the installations.
 
 1. Install Python
 	To verify that Python is installed correctly, open the command prompt (CMD) and execute the following command:
@@ -147,3 +157,7 @@ Previously, we explained the different modules we used in this project. To use t
 	![image](https://github.com/Cris272500/PG_Final_Project/assets/113935131/b1e65d15-9e6a-4e4e-a211-bf9d1429c4cb)
 
 	Then, execute `python UI.py`. This way, we will be running the project.
+
+In the following video we have final results of our project
+https://www.youtube.com/watch?v=X1Hovkq0Bbg
+	
